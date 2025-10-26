@@ -82,6 +82,8 @@ void convolute(void* data) {
     localStartRow = rank* srcImage->height / thread_count;
     localEndRow = (rank + 1) * srcImage->height / thread_count;
 
+    printf("%d", rank);
+
     if (rank == thread_count - 1) {
         localEndRow = srcImage->height;
     }
