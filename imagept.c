@@ -77,7 +77,7 @@ void convolute(void* data) {
     ConvoluteData* convData = (ConvoluteData*) data;
     Image* srcImage = convData->srcImage;
     Image* destImage = convData->destImage;
-    Matrix algorithm = *(convData->algorithm);
+    Matrix algorithm = (Matrix) *(convData->algorithm);
     long rank = convData->rank;
 
     localStartRow = rank* srcImage->height / thread_count;
