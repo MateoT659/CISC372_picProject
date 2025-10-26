@@ -144,7 +144,8 @@ int main(int argc, char** argv) {
     pthread_t* threads = (pthread_t*)malloc(thread_count * sizeof(pthread_t));
 
     for (rank = 0; rank < thread_count; rank++) {
-        pthread_create(&threads[rank], NULL, (void*)(&convolute), (void*)&((ConvoluteData)({&srcImage, &destImage, type, rank}));
+        ConvoluteData data = {&srcImage, &destImage, type, rank};
+        pthread_create(&threads[rank], NULL, (void*)(&convolute), (void*)&data);
     }
 
     for(rank = 0; rank < thread_count; rank++) {
