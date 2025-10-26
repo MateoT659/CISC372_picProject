@@ -87,7 +87,6 @@ void convolute(void* data) {
         localEndRow = srcImage->height;
     }
 
-    span = srcImage->bpp * srcImage->bpp;
     for (row = localStartRow; row < localEndRow; row++) {
         for (pix = 0; pix < srcImage->width; pix++) {
             for (bit = 0; bit < srcImage->bpp; bit++) {
@@ -145,11 +144,11 @@ int main(int argc, char** argv) {
 
     pthread_t* threads = (pthread_t*)malloc(thread_count * sizeof(pthread_t));
 
-    ConvoluteData data = {&srcImage, &destImage, algorithms[type], 0}
+    ConvoluteData data = { &srcImage, &destImage, &(algorithms[type]), 0 };
 
     for (rank = 0; rank < thread_count; rank++) {
         data.rank = rank;
-        pthread_create(&threads[rank], NULL, &convolute, (void*)&data);
+        pthread_create(&threads[rank], NULL, (void*)(&convolute), (void*)&data);
     }
 
     for(rank = 0; rank < thread_count; rank++) {
