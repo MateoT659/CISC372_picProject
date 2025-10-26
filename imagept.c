@@ -67,7 +67,7 @@ uint8_t getPixelValue(Image* srcImage, int x, int y, int bit, Matrix algorithm) 
 typedef struct {
 	Image* srcImage;
 	Image* destImage;
-	Matrix* algorithm;
+	enum KernelTypes type;
     long rank;
 } ConvoluteData;
 
@@ -77,7 +77,7 @@ void convolute(void* data) {
     ConvoluteData* convData = (ConvoluteData*) data;
     Image* srcImage = convData->srcImage;
     Image* destImage = convData->destImage;
-    Matrix algorithm = (convData->algorithm)[0];
+    Matrix algorithm = algorithms[data->type]
     long rank = convData->rank;
 
     localStartRow = rank* srcImage->height / thread_count;
@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
 
     pthread_t* threads = (pthread_t*)malloc(thread_count * sizeof(pthread_t));
 
-    ConvoluteData data = { &srcImage, &destImage, &(algorithms[type]) , 0 };
+    ConvoluteData data = { &srcImage, &destImage, type) , 0 };
 
     for (rank = 0; rank < thread_count; rank++) {
         data.rank = rank;
