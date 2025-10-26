@@ -5,6 +5,8 @@
 #include "image.h"
 #include <pthread.h>
 
+void convolute(void*);
+
 
 //defaulting to 8 threads
 int thread_count = 8;
