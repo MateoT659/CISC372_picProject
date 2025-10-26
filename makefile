@@ -1,5 +1,6 @@
 
-image:image.c image.h
-	gcc -g image.c -o image -lm -pthread
+image:imagept.c image.h
+	gcc -g imagept.c -o image -lm -pthread
+
 clean:
 	rm -f image output.png
