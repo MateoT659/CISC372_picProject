@@ -77,7 +77,6 @@ void convolute(void* data) {
     ConvoluteData* convData = (ConvoluteData*) data;
     Image* srcImage = convData->srcImage;
     Image* destImage = convData->destImage;
-    Matrix algorithm = algorithms[convData->type];
     long rank = convData->rank;
 
     localStartRow = rank* srcImage->height / thread_count;
@@ -90,7 +89,7 @@ void convolute(void* data) {
     for (row = localStartRow; row < localEndRow; row++) {
         for (pix = 0; pix < srcImage->width; pix++) {
             for (bit = 0; bit < srcImage->bpp; bit++) {
-                destImage->data[Index(pix, row, srcImage->width, bit, srcImage->bpp)] = getPixelValue(srcImage, pix, row, bit, algorithm);
+                destImage->data[Index(pix, row, srcImage->width, bit, srcImage->bpp)] = getPixelValue(srcImage, pix, row, bit, algorithms[convData->type]);
             }
         }
     }
