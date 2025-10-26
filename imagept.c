@@ -75,8 +75,8 @@ ConvoluteData convData;
 void convolute(void* data) {
     int row, pix, bit, localStartRow, localEndRow;
 
-    Image* srcImage = convData->srcImage;
-    Image* destImage = convData->destImage;
+    Image* srcImage = convData.srcImage;
+    Image* destImage = convData.destImage;
     long rank = (long) data;
 
     localStartRow = rank* srcImage->height / thread_count;
@@ -91,7 +91,7 @@ void convolute(void* data) {
     for (row = localStartRow; row < localEndRow; row++) {
         for (pix = 0; pix < srcImage->width; pix++) {
             for (bit = 0; bit < srcImage->bpp; bit++) {
-                destImage->data[Index(pix, row, srcImage->width, bit, srcImage->bpp)] = getPixelValue(srcImage, pix, row, bit, algorithms[convData->type]);
+                destImage->data[Index(pix, row, srcImage->width, bit, srcImage->bpp)] = getPixelValue(srcImage, pix, row, bit, algorithms[convData.type]);
             }
         }
     }
