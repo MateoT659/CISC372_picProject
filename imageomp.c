@@ -14,6 +14,8 @@
 //defaulting to 8 threads
 long thread_count = 8
 
+void convolute(Image* srcImage, Image* destImage, Matrix algorithm);
+
 //An array of kernel matrices to be used for image convolution.  
 //The indexes of these match the enumeration from the header file. ie. algorithms[BLUR] returns the kernel corresponding to a box blur.
 Matrix algorithms[]={
