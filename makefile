@@ -1,6 +1,6 @@
 
-image:clean imagept.c image.h
-	gcc -g imagept.c -o image -lm -pthread
+image:clean imageomp.c image.h
+	gcc -g imageomp.c -o image -lm -fopenmp
 
 clean:
 	rm -f image output.png
