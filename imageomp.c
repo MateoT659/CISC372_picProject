@@ -12,7 +12,7 @@
 #include "stb_image_write.h"
 
 //defaulting to 8 threads
-long thread_count = 8
+long thread_count = 8;
 
 void convolute(Image* srcImage, Image* destImage, Matrix algorithm);
 
