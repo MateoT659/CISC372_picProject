@@ -68,16 +68,16 @@ typedef struct {
 	Image* srcImage;
 	Image* destImage;
 	enum KernelTypes type;
-    long rank;
 } ConvoluteData;
+
+ConvoluteData convData;
 
 void convolute(void* data) {
     int row, pix, bit, localStartRow, localEndRow;
 
-    ConvoluteData* convData = (ConvoluteData*) data;
     Image* srcImage = convData->srcImage;
     Image* destImage = convData->destImage;
-    long rank = convData->rank;
+    long rank = (long) data;
 
     localStartRow = rank* srcImage->height / thread_count;
     localEndRow = (rank + 1) * srcImage->height / thread_count;
@@ -141,13 +141,16 @@ int main(int argc, char** argv) {
     destImage.width = srcImage.width;
     destImage.data = malloc(sizeof(uint8_t) * destImage.width * destImage.bpp * destImage.height);
 
-    long rank;
+    convData.destImage = &destImage;
+    convData.srcImage = &srcImage;
+    convData.type = type;
 
+    long rank;
+    
     pthread_t* threads = (pthread_t*)malloc(thread_count * sizeof(pthread_t));
 
     for (rank = 0; rank < thread_count; rank++) {
-        ConvoluteData data = {&srcImage, &destImage, type, rank};
-        pthread_create(&threads[rank], NULL, (void*)(&convolute), (void*)&data);
+        pthread_create(&threads[rank], NULL, (void*)(&convolute), (void*)rank);
     }
 
     for(rank = 0; rank < thread_count; rank++) {
